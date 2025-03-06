@@ -1,0 +1,80 @@
+#!/bin/sh
+
+# SPDX-License-Identifier: GPL-2.0+
+# Author: Kurt Borja <kuurtb@gmail.com>
+
+set -o errexit -o pipefail
+
+usage() {
+	echo """alienware-wmi control script
+
+Usage:
+	awcc-ctl list-profiles
+	awcc-ctl manual-fan-control
+	awcc-ctl get-profile
+	awcc-ctl set-profile <profile>
+	awcc-ctl get-boost
+	awcc-ctl set-boost <value>
+	awcc-ctl [-h | --help]
+"""
+}
+
+HWMON_PATH=$(grep -l alienware_wmi /sys/class/hwmon/hwmon*/name | sed 's|/[^/]*$||')
+PPROF_PATH=$(grep -l alienware-wmi /sys/class/platform-profile/platform-profile-*/name | sed 's|/[^/]*$||')
+
+list_profiles() {
+	cat $PPROF_PATH/choices
+}
+
+manual_fan_control() {
+	echo 1 | tee $HWMON_PATH/pwm1_enable
+}
+
+get_profile() {
+	cat $PPROF_PATH/profile
+}
+
+set_profile() {
+	echo $1 | tee $PPROF_PATH/profile
+}
+
+get_boost() {
+	cat $HWMON_PATH/pwm*_boost
+}
+
+set_boost() {
+	echo $1 | tee $HWMON_PATH/pwm*_boost
+}
+
+[ $# -eq 0 ] && usage && exit 1
+
+case "$1" in
+	-h|--help)
+		usage
+		exit 0
+	;;
+	list-profiles)
+		list_profiles
+	;;
+	manual-fan-control)
+		[ $(id -u) -ne 0 ] && echo "sudo is required" && exit 1
+		manual_fan_control
+	;;
+	get-profile)
+		get_profile
+	;;
+	set-profile) shift;
+		[ $(id -u) -ne 0 ] && echo "sudo is required" && exit 1
+		[ $# -eq 0 ] && echo "Error: <profile> is required" && exit 1
+		set_profile $1
+	;;
+	get-boost)
+		get_boost
+	;;
+	set-boost) shift;
+		[ $(id -u) -ne 0 ] && echo "sudo is required" && exit 1
+		[ $# -eq 0 ] && echo "Error: <boost> is required" && exit 1
+		set_boost $1
+	;;
+	*) echo "Error: Unknown command: $1"; usage; exit 1;;
+esac

@@ -13,6 +13,11 @@ Usage:
 	awcc-ctl [-h | --help]
 ```
 
+## Requirements
+
+* Kernel: *for-next* branch of the [platform-drivers-x86](https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git) tree
+* Patchset: [platform/x86: alienware-wmi-wmax: HWMON support + DebugFS + Improvements](https://patchwork.kernel.org/project/platform-driver-x86/cover/20250305-hwm-v3-0-395e7a1407e2@gmail.com/)
+
 ## Instructions
 
 To execute this script, do the following:

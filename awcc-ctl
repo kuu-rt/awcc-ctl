@@ -10,7 +10,6 @@ usage() {
 
 Usage:
 	awcc-ctl list-profiles
-	awcc-ctl manual-fan-control
 	awcc-ctl get-profile
 	awcc-ctl set-profile <profile>
 	awcc-ctl get-boost
@@ -26,10 +25,6 @@ list_profiles() {
 	cat $PPROF_PATH/choices
 }
 
-manual_fan_control() {
-	echo 1 | tee $HWMON_PATH/pwm1_enable
-}
-
 get_profile() {
 	cat $PPROF_PATH/profile
 }
@@ -39,11 +34,11 @@ set_profile() {
 }
 
 get_boost() {
-	cat $HWMON_PATH/pwm*_boost
+	cat $HWMON_PATH/fan*_boost
 }
 
 set_boost() {
-	echo $1 | tee $HWMON_PATH/pwm*_boost
+	echo $1 | tee $HWMON_PATH/fan*_boost
 }
 
 [ $# -eq 0 ] && usage && exit 1
@@ -55,10 +50,6 @@ case "$1" in
 	;;
 	list-profiles)
 		list_profiles
-	;;
-	manual-fan-control)
-		[ $(id -u) -ne 0 ] && echo "sudo is required" && exit 1
-		manual_fan_control
 	;;
 	get-profile)
 		get_profile

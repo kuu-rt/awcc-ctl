@@ -5,7 +5,6 @@ VERY minimalistic control script for the alienware-wmi driver.
 ```
 Usage:
 	awcc-ctl list-profiles
-	awcc-ctl manual-fan-control
 	awcc-ctl get-profile
 	awcc-ctl set-profile <profile>
 	awcc-ctl get-boost
@@ -15,8 +14,8 @@ Usage:
 
 ## Requirements
 
-* Kernel: *for-next* branch of the [platform-drivers-x86](https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git) tree
-* Patchset: [platform/x86: alienware-wmi-wmax: HWMON support + DebugFS + Improvements](https://patchwork.kernel.org/project/platform-driver-x86/cover/20250305-hwm-v3-0-395e7a1407e2@gmail.com/)
+* Kernel v6.15-rc1 or later (Latest commmit of [Linux](https://github.com/torvalds/linux))
+* Patchset: [platform/x86: alienware-wmi-wmax: HWMON support + DebugFS + Improvements](https://patchwork.kernel.org/project/platform-driver-x86/patch/20250329-hwm-v7-0-a14ea39d8a94@gmail.com/)
 
 ## Instructions
 

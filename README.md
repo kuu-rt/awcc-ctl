@@ -14,6 +14,12 @@ Usage:
 
 ## Requirements
 
+Compiling and loading my testing backport (Recommended):
+
+* [alienware-wmi](https://github.com/kuu-rt/alienware-wmi)
+
+or manually applying the required patches:
+
 * Kernel v6.15-rc1 or later (Latest commmit of [Linux](https://github.com/torvalds/linux))
 * Patchset: [platform/x86: alienware-wmi-wmax: HWMON support + DebugFS + Improvements](https://patchwork.kernel.org/project/platform-driver-x86/patch/20250329-hwm-v7-0-a14ea39d8a94@gmail.com/)
 
